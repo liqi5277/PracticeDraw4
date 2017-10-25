@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -72,7 +73,19 @@ public class Practice14FlipboardView extends View {
         int x = centerX - bitmapWidth / 2;
         int y = centerY - bitmapHeight / 2;
 
+
         canvas.save();
+        canvas.clipRect(0, 0, x + bitmapWidth, centerY);
+        canvas.drawBitmap(bitmap, x, y, paint);
+        canvas.restore();
+
+        canvas.save();
+//        Log.d("DRAW", "degree:" + this.degree);
+        if (degree > 90) {
+            canvas.clipRect(0, 0, getWidth(), centerY);
+        } else {
+            canvas.clipRect(0, centerY, getWidth(), y + bitmapHeight);
+        }
 
         camera.save();
         camera.rotateX(degree);
